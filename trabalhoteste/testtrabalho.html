@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Boletim do Aluno - EduPlataforma </title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f2f2f2;
+            margin: 0;
+            padding: 20px;
+        }
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: center;
+        }
+        th {
+            background-color: #4CAF50;
+            color: white;
+        }
+        .footer {
+            text-align: center;
+            margin-top: 20px;
+        }
+        .button-container {
+            text-align: center;
+            margin: 20px 0;
+        }
+        button {
+            padding: 10px 20px;
+            margin: 5px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .download-button {
+            background-color: #007BFF;
+            color: white;
+        }
+        .edit-button {
+            background-color: #FFC107;
+            color: black;
+        }
+    </style>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+</head>
+<body>
+
+    <h1>Boletim do Aluno - EduPlataforma</h1>
+
+    <div class="button-container">
+        <button class="download-button" onclick="downloadPDF()">Baixar Boletim em PDF</button>
+        <button class="edit-button" id="editButton" onclick="toggleEdit()">Modificar Notas</button>
+    </div>
+
+    <div id="contentToDownload">
+        <h2>Notas</h2>
+        <table id="notaTable">
+            <tr>
+                <th>Disciplina</th>
+                <th>Nome do Aluno</th>
+                <th>Nota</th>
+            </tr>
+            <tr>
+                <td>Português</td>
+                <td contenteditable="false">João Silva</td>
+                <td contenteditable="false">8.5</td>
+            </tr>
+            <tr>
+                <td>Matemática</td>
+                <td contenteditable="false">Maria Oliveira</td>
+                <td contenteditable="false">7.0</td>
+            </tr>
+            <tr>
+                <td>História</td>
+                <td contenteditable="false">Pedro Santos</td>
+                <td contenteditable="false">9.0</td>
+            </tr>
+            <tr>
+                <td>Geografia</td>
+                <td contenteditable="false">Ana Costa</td>
+                <td contenteditable="false">6.5</td>
+            </tr>
+            <tr>
+                <td>Ciências</td>
+                <td contenteditable="false">Lucas Lima</td>
+                <td contenteditable="false">8.0</td>
+            </tr>
+            <tr>
+                <td>Inglês</td>
+                <td contenteditable="false">Julia Almeida</td>
+                <td contenteditable="false">7.5</td>
+            </tr>
+            <tr>
+                <td>Espanhol</td>
+                <td contenteditable="false">Rafaela Pinto</td>
+                <td contenteditable="false">9.0</td>
+            </tr>
+            <tr>
+                <td>Robótica</td>
+                <td contenteditable="false">Thiago Mendes</td>
+                <td contenteditable="false">10.0</td>
+            </tr>
+            <tr>
+                <td>Física</td>
+                <td contenteditable="false">Carla Rocha</td>
+                <td contenteditable="false">7.0</td>
+            </tr>
+            <tr>
+                <td>Química</td>
+                <td contenteditable="false">Renata Ferreira</td>
+                <td contenteditable="false">8.5</td>
+            </tr>
+        </table>
+
+        <h2>Faltas</h2>
+        <table id="faltaTable">
+            <tr>
+                <th>Disciplina</th>
+                <th>Nome do Aluno</th>
+                <th>Faltas</th>
+            </tr>
+            <tr>
+                <td>Português</td>
+                <td contenteditable="false">João Silva</td>
+                <td contenteditable="false">2</td>
+            </tr>
+            <tr>
+                <td>Matemática</td>
+                <td contenteditable="false">Maria Oliveira</td>
+                <td contenteditable="false">1</td>
+            </tr>
+            <tr>
+                <td>História</td>
+                <td contenteditable="false">Pedro Santos</td>
+                <td contenteditable="false">0</td>
+            </tr>
+            <tr>
+                <td>Geografia</td>
+                <td contenteditable="false">Ana Costa</td>
+                <td contenteditable="false">3</td>
+            </tr>
+            <tr>
+                <td>Ciências</td>
+                <td contenteditable="false">Lucas Lima</td>
+                <td contenteditable="false">1</td>
+            </tr>
+            <tr>
+                <td>Inglês</td>
+                <td contenteditable="false">Julia Almeida</td>
+                <td contenteditable="false">0</td>
+            </tr>
+            <tr>
+                <td>Espanhol</td>
+                <td contenteditable="false">Rafaela Pinto</td>
+                <td contenteditable="false">1</td>
+            </tr>
+            <tr>
+                <td>Robótica</td>
+                <td contenteditable="false">Thiago Mendes</td>
+                <td contenteditable="false">0</td>
+            </tr>
+            <tr>
+                <td>Física</td>
+                <td contenteditable="false">Carla Rocha</td>
+                <td contenteditable="false">2</td>
+            </tr>
+            <tr>
+                <td>Química</td>
+                <td contenteditable="false">Renata Ferreira</td>
+                <td contenteditable="false">1</td>
+            </tr>
+        </table>
+    </div>
+
+    <div class="footer">
+        <p>&copy; 2024 SESI Conselheiro Saraíva</p>
+    </div>
+
+    <script>
+        function toggleEdit() {
+            const isEditing = document.getElementById('editButton').innerText === "Modificar Notas";
+            document.getElementById('editButton').innerText = isEditing ? "Salvar Notas" : "Modificar Notas";
+            toggleEditable(isEditing);
+        }
+
+        function toggleEditable(editing) {
+            document.querySelectorAll('#notaTable td, #faltaTable td').forEach(td => {
+                td.contentEditable = editing;
+            });
+        }
+
+        function downloadPDF() {
+            const element = document.getElementById('contentToDownload');
+            html2pdf()
+                .from(element)
+                .save('boletim_escolar.pdf');
+        }
+    </script>
+</body>
+</html>
